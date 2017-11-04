@@ -9,7 +9,7 @@ import { slideInDownAnimation } from '../../animations';
 @Component({
   selector: 'hero-detail',
   template: `
-    <div *ngIf="hero$ | async as hero">
+    <div *ngIf="hero">
       <h2>{{hero.name}} details!</h2>
       <div>
         <label>id: </label>{{hero.id}}
@@ -27,6 +27,7 @@ export class HeroDetailComponent {
   @HostBinding('style.display')   display = 'block';
   @HostBinding('style.position')  position = 'absolute';
   private hero$;
+  private hero;
 
   constructor(
     private router: Router,
@@ -39,6 +40,9 @@ export class HeroDetailComponent {
     this.hero$ = this.route.paramMap
       .switchMap((params: ParamMap) =>
         this.heroService.getHero(+params.get('id')));
+    this.hero$.subscribe((hero) => {
+      this.hero = hero
+    })
     // Debuging purposes
     // this.hero$.subscribe((returnFeed: Hero[]) => {console.log(returnFeed)})
   }

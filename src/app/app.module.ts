@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { CrisisListComponent } from './components/crisis-list/crisis-list.component';
+// import { CrisisListComponent } from './components/crisis-list/crisis-list.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 import { HeroesModule } from './components/heroes/heroes.module';
@@ -20,7 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   declarations: [
     AppComponent,
-    CrisisListComponent,
+    // CrisisListComponent,
     NotFoundComponent
   ],
   providers: [],

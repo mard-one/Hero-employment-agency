@@ -10,7 +10,7 @@ import { HeroService } from './hero.service';
   template: `
   <h2>My Heroes</h2>
   <ul class="heroes">
-    <li *ngFor="let hero of heroes$ | async"
+    <li *ngFor="let hero of heroes"
       [class.selected]="hero.id == selectedId"
       [routerLink]="['/hero', hero.id]">
       <span class="badge">{{hero.id}}</span> <span class='text'>{{hero.name}}</span>
@@ -66,7 +66,7 @@ import { HeroService } from './hero.service';
 })
 export class HeroListComponent implements OnInit {
   private heroes$: Observable<Hero[]>;
-  // private heroes: Hero[];
+  private heroes: Hero[];
   private selectedId;
 
   constructor(
@@ -78,14 +78,10 @@ export class HeroListComponent implements OnInit {
     this.heroes$ = this.route.paramMap.switchMap((params: ParamMap) => {
       this.selectedId = params.get('id');
       return this.heroService.getHeroes();
-
     });
-    //  this.heroes$.subscribe((heroes: Hero[]) => {
-    //    this.heroes == heroes
-    //    console.log(heroes) // Shows array of Objects
-    //    console.log(this.heroes) // Shows undefined
-    //  })
-
+     this.heroes$.subscribe((heroes: Hero[]) => {
+       this.heroes = heroes
+     })
      // debuging purposes
     // this.heroes$.subscribe((returnFeed: Hero[]) => {console.log(returnFeed)})
   }
