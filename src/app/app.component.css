@@ -1,0 +1,7 @@
+.active-link {
+  background-color: #007BFF;
+  color: white;
+}
+nav .badge{
+  border: 1px solid #007BFF
+}
