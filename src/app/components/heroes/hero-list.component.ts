@@ -89,8 +89,4 @@ export class HeroListComponent implements OnInit {
      // debuging purposes
     // this.heroes$.subscribe((returnFeed: Hero[]) => {console.log(returnFeed)})
   }
-
-  // onSelect(hero: Hero): void {
-  //   this.selectedHero = hero;
-  // }
 }
