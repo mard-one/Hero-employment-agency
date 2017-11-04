@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
 
 import { Hero } from './hero';
 import { HeroService } from './hero.service';
@@ -7,9 +10,9 @@ import { HeroService } from './hero.service';
   template: `
   <h2>My Heroes</h2>
   <ul class="heroes">
-    <li *ngFor="let hero of heroes"
-      [class.selected]="hero === selectedHero"
-      (click)="onSelect(hero)">
+    <li *ngFor="let hero of heroes$ | async"
+      [class.selected]="hero.id == selectedId"
+      [routerLink]="['/hero', hero.id]">
       <span class="badge">{{hero.id}}</span> <span class='text'>{{hero.name}}</span>
     </li>
   </ul>
@@ -62,21 +65,32 @@ import { HeroService } from './hero.service';
   providers: [HeroService]
 })
 export class HeroListComponent implements OnInit {
-  title = 'Tour of Heroes';
-  heroes: Hero[];
-  selectedHero: Hero;
+  private heroes$: Observable<Hero[]>;
+  // private heroes: Hero[];
+  private selectedId;
 
-  constructor(private heroService: HeroService) { }
+  constructor(
+    private heroService: HeroService,
+    private route: ActivatedRoute
+  ) { }
 
-  getHeroes(): void {
-    this.heroService.getHeroes().then(heroes => this.heroes = heroes);
+  ngOnInit() {
+    this.heroes$ = this.route.paramMap.switchMap((params: ParamMap) => {
+      this.selectedId = params.get('id');
+      return this.heroService.getHeroes();
+
+    });
+    //  this.heroes$.subscribe((heroes: Hero[]) => {
+    //    this.heroes == heroes
+    //    console.log(heroes) // Shows array of Objects
+    //    console.log(this.heroes) // Shows undefined
+    //  })
+
+     // debuging purposes
+    // this.heroes$.subscribe((returnFeed: Hero[]) => {console.log(returnFeed)})
   }
 
-  ngOnInit(): void {
-    this.getHeroes();
-  }
-
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-  }
+  // onSelect(hero: Hero): void {
+  //   this.selectedHero = hero;
+  // }
 }

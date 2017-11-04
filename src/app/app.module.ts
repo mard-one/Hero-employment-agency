@@ -19,7 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppComponent,
     CrisisListComponent,
     NotFoundComponent
-  ],  
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
